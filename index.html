@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Aya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; color: white; overflow: hidden; }
+        #bg { 
+            position: fixed; width: 100%; height: 100%; 
+            background-color: #1a1a1a;
+            /* Updated to .jpg to match your files */
+            background-image: url('1.jpeg');
+            background-size: cover; background-position: center; 
+            transition: background-image 1.5s ease-in-out; 
+            filter: brightness(0.5); z-index: -1; 
+        }
+        .overlay { height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; }
+        #lyric { 
+            font-family: 'Dancing Script', cursive; font-size: 2.8rem; 
+            max-width: 80%; transition: opacity 0.8s ease-in-out; 
+            text-shadow: 0px 0px 20px rgba(255, 182, 193, 0.9);
+        }
+        #start-btn { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 100; }
+        button { padding: 15px 40px; font-size: 1.2rem; color: #ffb6c1; border: 1px solid #ffb6c1; background: none; border-radius: 50px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div id="start-btn"><button onclick="startStory()">Start Experience</button></div>
+    <div id="bg"></div>
+    <div class="overlay"><div id="lyric">...</div></div>
+
+    <audio id="audio" src="song.mp3"></audio>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const lyricBox = document.getElementById('lyric');
+        const bg = document.getElementById('bg');
+
+        // All extensions updated from .jpeg to .jpg
+        const story = [
+            { time: 0, text: "...", img: "1.jpeg" },
+            { time: 13, text: "What would I do if I had forty-five minutes?", img: "1.jpeg" },
+            { time: 19, text: "Would I write a song?", img: "2.jpeg" },
+            { time: 22, text: "No, I don't think so", img: "2.jpeg" },
+            { time: 26, text: "What would I do if I had seventy seconds?", img: "3.jpeg" },
+            { time: 31, text: "Would I get a drink or two?", img: "4.jpeg" },
+            { time: 34, text: "No, I don't think so", img: "4.jpeg" },
+            { time: 38, text: "I'd rather get on a bus", img: "5.jpeg" },
+            { time: 41, text: "Find you where you are", img: "6.jpeg" },
+            { time: 44, text: "Tell you about that cloud that looked just like a kangaroo", img: "7.jpeg" },
+            { time: 50, text: "And the old man on the street", img: "8.jpeg" },
+            { time: 53, text: "Who sat there with his dog", img: "8.jpeg" },
+            { time: 56, text: "Ask you if you'd like to live that way with me too", img: "9.jpeg" },
+            { time: 62, text: "00000", img: "9.jpeg" },
+            { time: 65, text: "00000", img: "9.jpeg" },
+            { time: 68, text: "Would you like that?", img: "9.jpeg" },
+            { time: 71, text: "Would you like that?", img: "9.jpeg" },
+            { time: 87, text: "What would I do if I could fly up on a roof?", img: "10.jpeg" },
+            { time: 93, text: "Would I rob a bank?", img: "11.jpeg" },
+            { time: 96, text: "No, I don't think so", img: "11.jpeg" },
+            { time: 99, text: "What would I do if I could turn invisible?", img: "12.jpeg" },
+            { time: 105, text: "Would I take my favorite car?", img: "13.jpeg" },
+            { time: 108, text: "No, I don't think so", img: "13.jpeg" },
+            { time: 111, text: "I'd go to that restaurant", img: "14.jpeg" },
+            { time: 115, text: "Steal all their fortune cookies", img: "14.jpeg" },
+            { time: 118, text: "Read them one by one till it says I could be with you", img: "15.jpeg" },
+            { time: 124, text: "Sneak into the flower shop", img: "16.jpeg" },
+            { time: 127, text: "Watch how they make their bouquets", img: "16.jpeg" },
+            { time: 130, text: "So I can finally use the flowers I planted for just for you", img: "17.jpeg" },
+            { time: 136, text: "00000", img: "17.jpeg" },
+            { time: 139, text: "00000", img: "17.jpeg" },
+            { time: 141, text: "Would you like that?", img: "17.jpeg" },
+            { time: 144, text: "Would you like that?", img: "17.jpeg" },
+            { time: 148, text: "00000", img: "18.jpeg" },
+            { time: 151, text: "00000", img: "18.jpeg" },
+            { time: 154, text: "Would you like that?", img: "18.jpeg" },
+            { time: 157, text: "Would you like that?", img: "18.jpeg" },
+            { time: 160, text: "hhhhh", img: "18.jpeg" },
+            { time: 163, text: "00000", img: "18.jpeg" },
+            { time: 167, text: "Would you like that?", img: "18.jpeg" },
+            { time: 169, text: "Would you like that?", img: "18.jpeg" }
+         ];
+
+        function startStory() {
+            document.getElementById('start-btn').style.display = 'none';
+            audio.play();
+    
+            audio.ontimeupdate = () => {
+                let current = story.filter(s => audio.currentTime >= s.time).pop();
+                if (current && lyricBox.innerText !== current.text) {
+                    lyricBox.style.opacity = 0;
+                    setTimeout(() => {
+                        lyricBox.innerText = current.text;
+                        bg.style.backgroundImage = `url('${current.img}')`;
+                        lyricBox.style.opacity = 1;
+                    }, 400);
+                }
+            };
+        }
+    </script>
+</body>
+</html>
